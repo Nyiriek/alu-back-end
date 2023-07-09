@@ -1,24 +1,24 @@
 #!/usr/bin/python3
-"""Script that returns employee's to-do list"""
-
+""" Calls an API in order to get completed tasks """
 import requests
 import sys
 
-if __name__ == "__main__":
-    employeeId = sys.argv[1]
-    todo_url = "https://jsonplaceholder.typicode.com/users/1/todos/"
-    user_url = "https://jsonplaceholder.typicode.com/users"
-    todo = requests.get(todo_url, query_params={"employeeId": employeeId})
-    user = requests.get(user_url, query_params={"Id": employeeId})
 
-    todo_data = todo.json()
-    user_data = user.json()
+if __name__ == '__main__':
+    userId = sys.argv[1]
+    url_todo = 'https://jsonplaceholder.typicode.com/users/1/todos/'
+    url_user = 'https://jsonplaceholder.typicode.com/users'
+    todo = requests.get(url_todo, params={'userId': userId})
+    user = requests.get(url_user, params={'id': userId})
+
+    todo_dict_list = todo.json()
+    user_dict_list = user.json()
 
     completed_tasks = []
-    total_tasks = len(todo_data)
-    employee = user_data[0].get('name')
+    total_tasks = len(todo_dict_list)
+    employee = user_dict_list[0].get('name')
 
-    for task in todo_data:
+    for task in todo_dict_list:
         if task['completed']:
             completed_tasks.append(task)
 
